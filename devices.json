@@ -1,0 +1,5 @@
+[
+  {"room": "quarto1", "url": "http://192.168.0.100", "items": [{"device": "luz", "switch": "relay0"}, {"device": "ventilador", "switch": "relay2"}]},
+  {"room": "quarto2", "url": "http://192.168.0.102", "items": [{"device": "luz", "switch": "relay0"}, {"device": "ventilador", "switch": "relay2"}]},
+  {"room": "cozinha", "url": "http://192.168.0.103", "items": [{"device": "luz", "switch": "relay0"}, {"device": "cafeteira", "switch": "relay2"}]}
+]
