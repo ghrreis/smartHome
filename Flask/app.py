@@ -81,11 +81,7 @@ def devices():
 
 @app.route('/')
 def index():
-    my_list = ['apples', 'oranges', 'grapes', 'pineapple']
-    #time = datetime.now()
-    #log = request.remote_addr + " - - [" + time.strftime("%d/%b/%Y:%H:%M:%S") + "] \"" + request.method + " " + request.url + "\" \"" + str(request.user_agent) + "\" " + session["username"]
-    #print(log)
-    return "index"
+    return "Página principal"
 
 
 @app.route('/cmd/<room>/<device>/<status>', methods=['GET', 'POST'])
