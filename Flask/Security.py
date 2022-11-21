@@ -16,7 +16,6 @@ class Login():
         f = open("login.json", "r")
         file = f.read()
         users = json.loads(file)
-        print(users)
         for login in users:
             if (self.__user == login["username"]) and (self.__password == login["password"]):
                 self.__status = 1
