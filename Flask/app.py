@@ -84,7 +84,7 @@ def rooms():
     if session.get("username"):
         dev = Device()
         time = datetime.now()
-        logging = request.remote_addr + " - - [ " + time.strftime(
+        logging = request.remote_addr + " - - [" + time.strftime(
             "%d/%b/%Y:%H:%M:%S") + "] \"" + request.method + " " + request.url + "\" \"" + str(
             request.user_agent) + "\" \"" + session["username"] + "\""
         log = Logs(logging)
