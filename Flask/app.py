@@ -79,6 +79,27 @@ def devices():
         return '{"msg": "Não logado!!!"}'
 
 
+@app.route('/rooms')
+def rooms():
+    if session.get("username"):
+        dev = Device()
+        time = datetime.now()
+        logging = request.remote_addr + " - - [" + time.strftime(
+            "%d/%b/%Y:%H:%M:%S") + "] \"" + request.method + " " + request.url + "\" \"" + str(
+            request.user_agent) + "\" \"" + session["username"] + "\""
+        log = Logs(logging)
+        log.saveLog()
+        return dev.listRooms()
+    else:
+        time = datetime.now()
+        logging = request.remote_addr + " - - [" + time.strftime(
+            "%d/%b/%Y:%H:%M:%S") + "] \"" + request.method + " " + request.url + "\" \"" + str(
+            request.user_agent) + "\" Não logado!!!"
+        log = Logs(logging)
+        log.saveLog()
+        return '{"msg": "Não logado!!!"}'
+
+
 @app.route('/')
 def index():
     return "Página principal"
