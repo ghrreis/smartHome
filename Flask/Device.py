@@ -5,24 +5,21 @@ import json
 
 class Device():
 
-    __listDevices = []
+    __listDevices = ""
     __listRooms = []
 
     def __init__(self):
         return None
 
     # Retorna uma lista de todos os ambientes com seus dispositivos
-    def listDevices(self):
-        self.__listDevices.clear()
+    def listDevices(self, room):
         f = open("devices.json", "r")
         file = f.read()
         # Desserializa o JSON em um objeto Python. Transforma em um array de dictionary
         devices = json.loads(file)
         for device in devices:  # Navega em cada room
-            # Desserializa o JSON em um objeto Python retirando a chave url. Transforma em uma dictionary
-            item = json.loads('{"room":"%s", "items":"%s"}' % (device["room"], device["items"]))
-            # Insere cada dictionary em um array
-            self.__listDevices.append(item)
+            if device["room"] == room:
+                self.__listDevices = device["items"]
         return self.__listDevices
 
     # Retorna uma lista dos ambientes
