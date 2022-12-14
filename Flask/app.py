@@ -39,14 +39,13 @@ def login(username, password):
             request.user_agent) + "\" \"" + username + " erro no login\""
         log = Logs(logging)
         log.saveLog()
-        return '{"msg": "Erro no login!!!"}'
+        return '{"msg": "Erro no login!!!", "status": "nok"}'
 
 
 @app.route('/logout', methods=["POSt", "GET"])
 def logout():
     session.pop("username")
     session.pop("password")
-    session.pop("session-id")
 
     time = datetime.now()
     logging = request.remote_addr + " - - [" + time.strftime(
@@ -55,11 +54,11 @@ def logout():
     log = Logs(logging)
     log.saveLog()
 
-    return '{"msg": "Sessão encerrada!!!"}'
+    return '{"msg": "Sessão encerrada!!!", "status": "ok"}'
 
 
-@app.route('/devices')
-def devices():
+@app.route('/devices/<room>', methods=["POSt", "GET"])
+def devices(room):
     if session.get("username"):
         dev = Device()
         time = datetime.now()
@@ -68,7 +67,8 @@ def devices():
             request.user_agent) + "\" \"" + session["username"] + "\""
         log = Logs(logging)
         log.saveLog()
-        return dev.listDevices()
+        return '{"status": "ok", "session-id": "%s", "items": %s}' % (session.__dict__["sid"], dev.listDevices(room))
+        #return dev.listDevices(room)
     else:
         time = datetime.now()
         logging = request.remote_addr + " - - [" + time.strftime(
@@ -76,7 +76,7 @@ def devices():
             request.user_agent) + "\" Não logado!!!"
         log = Logs(logging)
         log.saveLog()
-        return '{"msg": "Não logado!!!"}'
+        return '{"msg": "Não logado!!!", "status": "nok"}'
 
 
 @app.route('/rooms')
@@ -89,7 +89,9 @@ def rooms():
             request.user_agent) + "\" \"" + session["username"] + "\""
         log = Logs(logging)
         log.saveLog()
-        return dev.listRooms()
+        # Retorna msg de login com sucesso, o status da msg ok e o id da sessão
+        return '{"status": "ok", "session-id": "%s", "rooms": %s}' % (session.__dict__["sid"], dev.listRooms())
+        #return dev.listRooms()
     else:
         time = datetime.now()
         logging = request.remote_addr + " - - [" + time.strftime(
@@ -97,7 +99,7 @@ def rooms():
             request.user_agent) + "\" Não logado!!!"
         log = Logs(logging)
         log.saveLog()
-        return '{"msg": "Não logado!!!"}'
+        return '{"msg": "Não logado!!!", "status": "nok"}'
 
 
 @app.route('/')
@@ -111,13 +113,13 @@ def cmd(room, device, status):
         dev = Device()
         result = dev.getDevice(room, device)
         try:
-            req = requests.get(result+status)
+            #req = requests.get(result+status)
             if status == "on":
-                return '{"msg": "Ligado"}'
+                return '{"status": "ok", "device": "%s", "msg": "(Ligado)"}' % (device)
             else:
-                return '{"msg": "Desligado"}'
+                return '{"status": "ok", "device": "%s", "msg": "(Desligado)"}' % (device)
         except Exception as e:
-                return '{"msg": "Erro de comunicação"}'
+                return '{"status": "nok", "msg": "Erro de comunicação"}'
         time = datetime.now()
         logging = request.remote_addr + " - - [" + time.strftime(
             "%d/%b/%Y:%H:%M:%S") + "] \"" + request.method + " " + request.url + "\" \"" + str(
@@ -131,7 +133,7 @@ def cmd(room, device, status):
         request.user_agent) + "\" \"Não logado!!!\""
     log = Logs(logging)
     log.saveLog()
-    return '{"msg": "Não logado!!!"}'
+    return '{"status": "ok", "msg": "Não logado!!!"}'
 
 @app.errorhandler(404)
 def page_not_found(e):
