@@ -36,6 +36,7 @@ class Device():
             self.__listRooms.append(item)
         return self.__listRooms
 
+    # Retorna o URL do dispositivo que será manipulado
     def getDevice(self, room, dev):
         sw = ""
         url = ""
