@@ -8,6 +8,7 @@ from datetime import datetime
 from Security import Login
 from Device import Device
 from Log import Logs
+import requests
 
 app = Flask(__name__)
 app.secret_key = "gustavo"
