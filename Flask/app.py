@@ -148,7 +148,7 @@ def cmd(room, device, status):
         dev = Device()  # Classe Device responsável por manipular os dispositivos
         result = dev.getDevice(room, device)  # Método responsável por retornar o URL e o relay do dispositivo
         try:
-            #req = requests.get(result+status)  # Executa a ação (liga/desliga) no dispositivo
+            req = requests.get(result+status)  # Executa a ação (liga/desliga) no dispositivo
 
             time = datetime.now()  # Acessa a data e hora do SO
             '''
