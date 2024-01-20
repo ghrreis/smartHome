@@ -19,7 +19,11 @@
             curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
             // Configura a sessão cURL para ser redirecionado caso seja necessário
             curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, true);
-        }
+	    // Desabilita a verificação do certificado SSL do host
+	    curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, 0);
+	    // Desabilita a verificação do certificado SSL do peer
+	    curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, 0); 
+	}
 
         // Método responsável por fazer a requisição ao Flask
         function get() {            
