@@ -4,7 +4,7 @@
         Monta o endereço para ser requisitado ao servidor Flask
         Ex.: http://localhost:5005/login/jose/123456
     */
-    $page = "http://localhost:5005/login/".$_POST["username"]."/".$_POST["password"];
+    $page = "https://localhost:5005/login/".$_POST["username"]."/".$_POST["password"];
 
     $req = new Requests($page); // Instancia a classe Requests passando a URL como parâmetro
     $response = $req->get(); // Faz a requisição ao Flask e retorna o resultado

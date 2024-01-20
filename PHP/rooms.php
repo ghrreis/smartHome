@@ -2,7 +2,7 @@
     include('requests.php');
     // Verifica se o usuário está "logado" através da variável de sessão STATUS
     if ($_SESSION['status'] == 1) {
-        $page = "http://localhost:5005/rooms"; // Monta o endereço para ser requisitado ao servidor Flask
+        $page = "https://localhost:5005/rooms"; // Monta o endereço para ser requisitado ao servidor Flask
         
         $req = new Requests($page); // Instancia a classe Requests passando a URL como parâmetro
         // Atribui o valor da sessão do Flask na variável COOKIE
